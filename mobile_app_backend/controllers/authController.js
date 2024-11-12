@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const EmailService = require('../services/emailService');
 
-// Login controller
+// Existing login controller
 exports.login = async (req, res) => {
   try {
     const { regNumber, password } = req.body;
@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// Send OTP controller
+// Existing Send OTP controller
 exports.sendOTP = async (req, res) => {
   try {
     const { email } = req.body;
@@ -88,7 +88,7 @@ exports.sendOTP = async (req, res) => {
   }
 };
 
-// Verify OTP controller
+// Existing Verify OTP controller
 exports.verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -122,7 +122,7 @@ exports.verifyOTP = async (req, res) => {
   }
 };
 
-// Reset Password controller
+// Existing Reset Password controller
 exports.resetPassword = async (req, res) => {
   try {
     const { email, newPassword } = req.body;
@@ -154,6 +154,58 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error resetting password'
+    });
+  }
+};
+
+// New Change Password controller
+exports.changePassword = async (req, res) => {
+  try {
+    const { regNumber, oldPassword, newPassword } = req.body;
+
+    // Input validation
+    if (!regNumber || !oldPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Registration number, old password, and new password are required'
+      });
+    }
+
+    // Find user
+    const user = await User.findByRegNumber(regNumber);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Verify old password
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Current password is incorrect'
+      });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    
+    // Update password
+    await User.updatePassword(regNumber, hashedPassword);
+
+    res.json({
+      success: true,
+      message: 'Password changed successfully'
+    });
+
+  } catch (error) {
+    console.error('Change password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error changing password',
+      error: error.message
     });
   }
 };

@@ -5,6 +5,7 @@ class ApiService {
   static const String baseUrl = 'http://10.0.2.2:3000/api';
 
   // Login functionality
+
   static Future<Map<String, dynamic>> login(
       String regNumber, String password) async {
     final response = await http.post(
@@ -17,7 +18,8 @@ class ApiService {
         : {'success': false, 'message': 'Login failed'};
   }
 
-//  send otp functinality
+  //  send otp functinality
+
   static Future<Map<String, dynamic>> sendOtp(String email) async {
     final response = await http.post(
       Uri.parse('$baseUrl/send-otp'),
@@ -29,7 +31,8 @@ class ApiService {
         : {'success': false, 'message': 'Failed to send OTP'};
   }
 
-// verify otp functionality
+  // verify otp functionality
+
   static Future<Map<String, dynamic>> verifyOtp(
       String email, String otp) async {
     try {
@@ -55,6 +58,7 @@ class ApiService {
   }
 
   // Password reset functionality
+
   static Future<Map<String, dynamic>> resetPassword(
       String email, String newPassword) async {
     final response = await http.post(
@@ -68,6 +72,7 @@ class ApiService {
   }
 
   // Get subordinates functionality
+
   static Future<Map<String, dynamic>> getAll() async {
     try {
       print('Fetching subordinates...'); // Debug log
@@ -95,6 +100,7 @@ class ApiService {
   }
 
   // Add subordinate functionality
+
   static Future<Map<String, dynamic>> add(
     String name,
     String address,
@@ -129,6 +135,7 @@ class ApiService {
   }
 
   // Update subordinate functionality
+
   static Future<Map<String, dynamic>> update(
     String id,
     String name,
@@ -171,6 +178,7 @@ class ApiService {
   }
 
   // Delete subordinate functionality
+
   static Future<Map<String, dynamic>> delete(String id) async {
     try {
       final response = await http.delete(
@@ -186,6 +194,39 @@ class ApiService {
           'message': response.body.isNotEmpty
               ? jsonDecode(response.body)['message']
               : 'Failed to delete subordinate'
+        };
+      }
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
+    }
+  }
+
+  //Change password functionality
+
+  static Future<Map<String, dynamic>> changePassword({
+    required String regNumber,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await http.post(
+        // Changed to POST to match backend
+        Uri.parse('$baseUrl/change-password'), // Updated endpoint
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'regNumber': regNumber,
+          'oldPassword': currentPassword, // Changed to match backend
+          'newPassword': newPassword,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        final errorData = jsonDecode(response.body);
+        return {
+          'success': false,
+          'message': errorData['message'] ?? 'Failed to change password'
         };
       }
     } catch (e) {

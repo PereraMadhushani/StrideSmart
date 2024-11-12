@@ -100,11 +100,25 @@ class User {
       throw error;
     }
   }
+
+  static async updatePassword(regNumber, hashedPassword) {
+    try {
+      const [result] = await db.query(
+        'UPDATE user SET password = ? WHERE regNumber = ?',
+        [hashedPassword, regNumber]
+      );
+      
+      if (result.affectedRows === 0) {
+        throw new Error('User not found');
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Update password error:', error);
+      throw error;
+    }
+  }
+
 }
-
-
-
-
-
 
 module.exports = User;
