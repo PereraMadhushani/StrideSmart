@@ -15,6 +15,8 @@ const authRoutes = require('./routes/authRoutes');
 const subordinateRoutes = require('./routes/subordinateRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const leaveRoutes = require('./routes/leaveRoutes');
+const orderStatusRoutes = require('./routes/orderStatusRoutes');
+
 
 
 
@@ -23,6 +25,7 @@ app.use('/api', authRoutes);
 app.use('/api', subordinateRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/', leaveRoutes);
+app.use('/api', orderStatusRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {
