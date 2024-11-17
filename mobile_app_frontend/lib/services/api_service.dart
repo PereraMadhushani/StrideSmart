@@ -321,4 +321,36 @@ class ApiService {
       };
     }
   }
+       // Status Update
+  static Future<Map<String, dynamic>> submitOrderStatus({
+  required String orderId,
+  required String regNumber,
+  required String status,
+}) async {
+  try {
+    final response = await http.post(
+      Uri.parse('$baseUrl/submit-order'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'order_id': orderId,
+        'reg_number': regNumber,
+        'current_status': status,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return {
+        'success': false,
+        'message': jsonDecode(response.body)['message'] ?? 'Failed to update order status'
+      };
+    }
+  } catch (e) {
+    return {
+      'success': false,
+      'message': 'Error connecting to server'
+    };
+  }
+}
 }

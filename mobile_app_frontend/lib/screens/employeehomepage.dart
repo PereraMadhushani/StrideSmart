@@ -290,7 +290,7 @@ class _EmployeehomepageState extends State<Employeehomepage>
       'Subordinate': const SubordinateScreen(),
       'Order': const OrderStatusPage(),
       'Leave': const ApplyLeavePage(),
-      'Status': const statusPage(),
+      'Status': const OrderPage(),
       'Salary': const SalaryPage(regNumber: ''),
     };
 
