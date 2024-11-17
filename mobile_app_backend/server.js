@@ -13,8 +13,16 @@ app.use(express.json());
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const subordinateRoutes = require('./routes/subordinateRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const leaveRoutes = require('./routes/leaveRoutes');
+
+
+
+
 app.use('/api', authRoutes);
 app.use('/api', subordinateRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/', leaveRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {
