@@ -64,7 +64,12 @@ class _AddSubordinateFormState extends State<AddSubordinateForm> {
         setState(() => _isLoading = false);
 
         if (response['success'] == true) {
-          Navigator.pop(context, true);
+          // Show success dialog
+          await _showSuccessDialog();
+          // Navigate back to subordinates page
+          if (mounted) {
+            Navigator.pop(context, true);
+          }
         } else {
           _showErrorDialog(response['message'] ?? 'Failed to save data');
         }
@@ -75,6 +80,55 @@ class _AddSubordinateFormState extends State<AddSubordinateForm> {
     }
   }
 
+// Add this new method for success dialog
+  Future<void> _showSuccessDialog() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Column(
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: highlightColor,
+                size: 50,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Success!',
+                style: TextStyle(color: highlightColor),
+              ),
+            ],
+          ),
+          content: Text(
+            widget.existingSubordinate != null
+                ? 'Subordinate updated successfully!'
+                : 'Subordinate added successfully!',
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white),
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                'OK',
+                style: TextStyle(color: highlightColor),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+// Keep the existing error dialog method
   void _showErrorDialog(String message) {
     showDialog(
       context: context,

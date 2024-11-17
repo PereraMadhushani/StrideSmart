@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../services/api_service.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -85,89 +84,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
       setState(() => _isLoading = false);
 
       if (response['success']) {
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            elevation: 8,
-            backgroundColor: backgroundColor,
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    primaryColor,
-                    backgroundColor,
-                    cardColor,
-                  ],
-                  stops: const [0.2, 0.6, 1.0],
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.check_circle_outline,
-                    color: highlightColor,
-                    size: 64,
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Success',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.5,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Password changed successfully',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close dialog
-                      Navigator.of(context).pop(); // Return to previous screen
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: highlightColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      elevation: 5,
-                    ),
-                    child: const Text(
-                      'OK',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+        await _showSuccessDialog();
       } else {
         _showErrorDialog(response['message'] ?? 'Failed to change password');
       }
@@ -194,6 +111,135 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
     return highlightColor;
   }
 
+  String _getStrengthText() {
+    if (_passwordStrength == 0) return 'Enter Password';
+    if (_passwordStrength <= 0.25) return 'Weak';
+    if (_passwordStrength <= 0.5) return 'Medium';
+    if (_passwordStrength <= 0.75) return 'Strong';
+    return 'Very Strong';
+  }
+
+  Future<void> _showSuccessDialog() async {
+    final isTablet = MediaQuery.of(context).size.width > 600;
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(isTablet ? 25 : 20),
+        ),
+        elevation: 8,
+        backgroundColor: backgroundColor,
+        child: Container(
+          padding: EdgeInsets.all(isTablet ? 32 : 24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [primaryColor, backgroundColor, cardColor],
+              stops: const [0.2, 0.6, 1.0],
+            ),
+            borderRadius: BorderRadius.circular(isTablet ? 25 : 20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: highlightColor,
+                size: isTablet ? 80 : 64,
+              ),
+              SizedBox(height: isTablet ? 24 : 16),
+              Text(
+                'Success',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: isTablet ? 28 : 24,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.5,
+                ),
+              ),
+              SizedBox(height: isTablet ? 16 : 8),
+              Text(
+                'Password changed successfully',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: isTablet ? 18 : 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: isTablet ? 32 : 24),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: highlightColor,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isTablet ? 40 : 32,
+                    vertical: isTablet ? 20 : 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(isTablet ? 30 : 25),
+                  ),
+                  elevation: 5,
+                ),
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    fontSize: isTablet ? 18 : 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showErrorDialog(String message) {
+    final isTablet = MediaQuery.of(context).size.width > 600;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(isTablet ? 25 : 20),
+        ),
+        title: Text(
+          'Error',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: isTablet ? 24 : 20,
+          ),
+        ),
+        content: Text(
+          message,
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: isTablet ? 18 : 16,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: highlightColor,
+                fontSize: isTablet ? 18 : 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -218,18 +264,23 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
   }
 
   PreferredSizeWidget _buildAppBar() {
+    final isTablet = MediaQuery.of(context).size.width > 600;
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+        icon: Icon(
+          Icons.arrow_back_ios_new,
+          color: Colors.white,
+          size: isTablet ? 28 : 24,
+        ),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      title: const Text(
+      title: Text(
         'Change Password',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 24,
+          fontSize: isTablet ? 28 : 24,
           fontWeight: FontWeight.w600,
           letterSpacing: 1.5,
           fontFamily: 'Poppins',
@@ -240,70 +291,135 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Form(
-        key: _formKey,
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600;
+    final maxWidth = isTablet ? 600.0 : size.width;
+
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(maxWidth: maxWidth),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(isTablet ? 24 : 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildRequirementsCard(isTablet),
+                SizedBox(height: isTablet ? 30 : 20),
+                _buildRegNumberCard(isTablet),
+                SizedBox(height: isTablet ? 30 : 20),
+                _buildPasswordCard(isTablet),
+                SizedBox(height: isTablet ? 36 : 24),
+                _buildButtons(isTablet),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRequirementsCard(bool isTablet) {
+    return Card(
+      elevation: 8,
+      color: Colors.white.withOpacity(0.1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(isTablet ? 25 : 20),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(isTablet ? 24 : 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildRequirementsCard(),
-            const SizedBox(height: 20),
-            _buildRegNumberCard(),
-            const SizedBox(height: 20),
-            _buildPasswordCard(),
-            const SizedBox(height: 24),
-            _buildButtons(),
+            Row(
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  color: Colors.white.withOpacity(0.7),
+                  size: isTablet ? 28 : 24,
+                ),
+                SizedBox(width: isTablet ? 12 : 8),
+                Text(
+                  'Password Requirements',
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: isTablet ? 22 : 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: isTablet ? 24 : 16),
+            _buildRequirement('At least 8 characters', isTablet),
+            _buildRequirement('One uppercase letter', isTablet),
+            _buildRequirement('One number', isTablet),
+            _buildRequirement('One special character (!@#\$&*~)', isTablet),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildRegNumberCard() {
+  Widget _buildRegNumberCard(bool isTablet) {
     return Card(
       elevation: 8,
       color: Colors.white.withOpacity(0.1),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(isTablet ? 25 : 20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(isTablet ? 24 : 16),
         child: Column(
           children: [
             TextFormField(
               controller: _regNumberController,
-              style: const TextStyle(color: Colors.white),
-              keyboardType: TextInputType.text, // Allow text input
-              textCapitalization:
-                  TextCapitalization.characters, // Auto-capitalize
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: isTablet ? 18 : 16,
+              ),
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
                 labelText: 'Registration Number',
-                labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                labelStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.7),
+                  fontSize: isTablet ? 18 : 16,
+                ),
                 hintText: 'Enter Registration Number',
-                hintStyle: TextStyle(color: Colors.white.withOpacity(0.3)),
-                prefixIcon: Icon(Icons.person_outline,
-                    color: Colors.white.withOpacity(0.7)),
+                hintStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.3),
+                  fontSize: isTablet ? 18 : 16,
+                ),
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: Colors.white.withOpacity(0.7),
+                  size: isTablet ? 28 : 24,
+                ),
                 filled: true,
                 fillColor: Colors.white.withOpacity(0.1),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(isTablet ? 15 : 12),
                   borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(isTablet ? 15 : 12),
                   borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: highlightColor, width: 2),
+                  borderRadius: BorderRadius.circular(isTablet ? 15 : 12),
+                  borderSide: BorderSide(
+                      color: highlightColor, width: isTablet ? 2.5 : 2),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 24 : 20,
+                  vertical: isTablet ? 20 : 16,
                 ),
               ),
               validator: (value) {
                 if (value?.isEmpty ?? true) {
                   return 'Registration Number is required';
                 }
-                // Optional: Add additional validation for registration number format
                 if (value!.length < 3) {
                   return 'Please enter a valid registration number';
                 }
@@ -316,52 +432,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
     );
   }
 
-  Widget _buildRequirementsCard() {
+  Widget _buildPasswordCard(bool isTablet) {
     return Card(
       elevation: 8,
       color: Colors.white.withOpacity(0.1),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(isTablet ? 25 : 20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.info_outline, color: Colors.white.withOpacity(0.7)),
-                const SizedBox(width: 8),
-                Text(
-                  'Password Requirements',
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildRequirement('At least 8 characters'),
-            _buildRequirement('One uppercase letter'),
-            _buildRequirement('One number'),
-            _buildRequirement('One special character (!@#\$&*~)'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPasswordCard() {
-    return Card(
-      elevation: 8,
-      color: Colors.white.withOpacity(0.1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(isTablet ? 24 : 16),
         child: Column(
           children: [
             _buildPasswordField(
@@ -370,8 +449,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
               showPassword: _showCurrentPassword,
               onToggle: () =>
                   setState(() => _showCurrentPassword = !_showCurrentPassword),
+              isTablet: isTablet,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: isTablet ? 24 : 16),
             _buildPasswordField(
               controller: _newPasswordController,
               label: 'New Password',
@@ -379,16 +459,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
               onToggle: () =>
                   setState(() => _showNewPassword = !_showNewPassword),
               onChanged: _checkPasswordStrength,
+              isTablet: isTablet,
             ),
             const SizedBox(height: 8),
-            _buildStrengthIndicator(),
-            const SizedBox(height: 16),
+            _buildStrengthIndicator(isTablet),
+            SizedBox(height: isTablet ? 24 : 16),
             _buildPasswordField(
               controller: _confirmPasswordController,
               label: 'Confirm Password',
               showPassword: _showConfirmPassword,
               onToggle: () =>
                   setState(() => _showConfirmPassword = !_showConfirmPassword),
+              isTablet: isTablet,
               validator: (value) {
                 if (value != _newPasswordController.text) {
                   return 'Passwords do not match';
@@ -407,6 +489,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
     required String label,
     required bool showPassword,
     required VoidCallback onToggle,
+    required bool isTablet,
     Function(String)? onChanged,
     String? Function(String?)? validator,
   }) {
@@ -414,32 +497,47 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
       controller: controller,
       obscureText: !showPassword,
       onChanged: onChanged,
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: isTablet ? 18 : 16,
+      ),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
-        prefixIcon:
-            Icon(Icons.lock_outline, color: Colors.white.withOpacity(0.7)),
+        labelStyle: TextStyle(
+          color: Colors.white.withOpacity(0.7),
+          fontSize: isTablet ? 18 : 16,
+        ),
+        prefixIcon: Icon(
+          Icons.lock_outline,
+          color: Colors.white.withOpacity(0.7),
+          size: isTablet ? 28 : 24,
+        ),
         suffixIcon: IconButton(
           icon: Icon(
             showPassword ? Icons.visibility_off : Icons.visibility,
             color: Colors.white.withOpacity(0.7),
+            size: isTablet ? 28 : 24,
           ),
           onPressed: onToggle,
         ),
         filled: true,
         fillColor: Colors.white.withOpacity(0.1),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(isTablet ? 15 : 12),
           borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(isTablet ? 15 : 12),
           borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: highlightColor, width: 2),
+          borderRadius: BorderRadius.circular(isTablet ? 15 : 12),
+          borderSide:
+              BorderSide(color: highlightColor, width: isTablet ? 2.5 : 2),
+        ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: isTablet ? 24 : 20,
+          vertical: isTablet ? 20 : 16,
         ),
       ),
       validator:
@@ -447,25 +545,25 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
     );
   }
 
-  Widget _buildStrengthIndicator() {
+  Widget _buildStrengthIndicator(bool isTablet) {
     return Column(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(isTablet ? 12 : 10),
           child: LinearProgressIndicator(
             value: _passwordStrength,
             backgroundColor: Colors.white.withOpacity(0.1),
             valueColor: AlwaysStoppedAnimation<Color>(
                 _getStrengthColor(_passwordStrength)),
-            minHeight: 8,
+            minHeight: isTablet ? 10 : 8,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: isTablet ? 12 : 8),
         Text(
           _getStrengthText(),
           style: TextStyle(
             color: _getStrengthColor(_passwordStrength),
-            fontSize: 14,
+            fontSize: isTablet ? 16 : 14,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -473,56 +571,54 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
     );
   }
 
-  String _getStrengthText() {
-    if (_passwordStrength == 0) return 'Enter Password';
-    if (_passwordStrength <= 0.25) return 'Weak';
-    if (_passwordStrength <= 0.5) return 'Medium';
-    if (_passwordStrength <= 0.75) return 'Strong';
-    return 'Very Strong';
-  }
-
-  Widget _buildButtons() {
+  Widget _buildButtons(bool isTablet) {
     return Row(
       children: [
         Expanded(
           child: TextButton(
             onPressed: () => Navigator.of(context).pop(),
             style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(
+                vertical: isTablet ? 20 : 16,
+              ),
               foregroundColor: Colors.white,
             ),
-            child: const Text(
+            child: Text(
               'Cancel',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: isTablet ? 18 : 16,
+              ),
             ),
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: isTablet ? 24 : 16),
         Expanded(
           child: ElevatedButton(
             onPressed: _isLoading ? null : _changePassword,
             style: ElevatedButton.styleFrom(
               backgroundColor: highlightColor,
               foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(
+                vertical: isTablet ? 20 : 16,
+              ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(isTablet ? 30 : 25),
               ),
               elevation: 5,
             ),
             child: _isLoading
-                ? const SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(
+                ? SizedBox(
+                    height: isTablet ? 28 : 24,
+                    width: isTablet ? 28 : 24,
+                    child: const CircularProgressIndicator(
                       strokeWidth: 3,
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
-                : const Text(
+                : Text(
                     'Change Password',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: isTablet ? 18 : 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -532,39 +628,23 @@ class _ChangePasswordPageState extends State<ChangePasswordPage>
     );
   }
 
-  Widget _buildRequirement(String text) {
+  Widget _buildRequirement(String text, bool isTablet) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: isTablet ? 6 : 4),
       child: Row(
         children: [
           Icon(
             Icons.check_circle_outline,
             color: highlightColor,
-            size: 16,
+            size: isTablet ? 20 : 16,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: isTablet ? 12 : 8),
           Text(
             text,
             style: TextStyle(
               color: Colors.white.withOpacity(0.7),
-              fontSize: 14,
+              fontSize: isTablet ? 16 : 14,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
           ),
         ],
       ),

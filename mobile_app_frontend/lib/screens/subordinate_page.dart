@@ -60,7 +60,8 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
     setState(() {
       filteredSubordinates = subordinates.where((subordinate) {
         final name = subordinate['name']?.toString().toLowerCase() ?? '';
-        final contact = subordinate['contactNumber']?.toString().toLowerCase() ?? '';
+        final contact =
+            subordinate['contactNumber']?.toString().toLowerCase() ?? '';
         final address = subordinate['address']?.toString().toLowerCase() ?? '';
         final searchLower = query.toLowerCase();
         return name.contains(searchLower) ||
@@ -127,21 +128,21 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
           backgroundColor: backgroundColor,
           title: const Text('Confirm Delete',
               style: TextStyle(color: Colors.white)),
-          content: const Text('Are you sure you want to delete this subordinate?',
+          content: const Text(
+              'Are you sure you want to delete this subordinate?',
               style: TextStyle(color: Colors.white70)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel',
-                  style: TextStyle(color: highlightColor)),
+              child:
+                  const Text('Cancel', style: TextStyle(color: highlightColor)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 _deleteSubordinate(id);
               },
-              child: const Text('Delete',
-                  style: TextStyle(color: Colors.red)),
+              child: const Text('Delete', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -207,7 +208,8 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
               child: isLoading
                   ? Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(highlightColor),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(highlightColor),
                       ),
                     )
                   : _buildSubordinatesList(),
@@ -220,30 +222,123 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
 
   Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(30),
+          color: cardColor.withOpacity(0.3), // Changed background color
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: const Offset(0, 4),
+            ),
+          ],
           border: Border.all(
-            color: Colors.white.withOpacity(0.2),
+            color: highlightColor.withOpacity(0.2),
             width: 1,
           ),
         ),
         child: TextField(
           controller: _searchController,
-          style: const TextStyle(color: Colors.white),
-          onChanged: _filterSubordinates,
+          style: const TextStyle(
+            // Explicitly set text style
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+          ),
+          onChanged: (value) {
+            print('Search query: $value'); // Debug print
+            setState(() {
+              // Added setState to trigger rebuild
+              _filterSubordinates(value);
+            });
+          },
           decoration: InputDecoration(
             hintText: 'Search subordinates...',
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-            prefixIcon: Icon(
-              Icons.search,
+            hintStyle: TextStyle(
               color: Colors.white.withOpacity(0.5),
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
             ),
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+            prefixIcon: Container(
+              padding: const EdgeInsets.all(12),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: highlightColor.withOpacity(0.9),
+                    size: 26,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: highlightColor.withOpacity(0.3),
+                          blurRadius: 8,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            suffixIcon: _searchController.text.isNotEmpty
+                ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _searchController.clear();
+                        _filterSubordinates('');
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white.withOpacity(0.7),
+                        size: 20,
+                      ),
+                    ),
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              // Added enabledBorder
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: highlightColor.withOpacity(0.2),
+                width: 1,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: highlightColor.withOpacity(0.5),
+                width: 2,
+              ),
+            ),
+            fillColor: cardColor.withOpacity(0.3), // Added fillColor
+            filled: true, // Enable filling
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 16,
+            ),
           ),
+          cursorColor: highlightColor,
+          cursorWidth: 2,
+          cursorRadius: const Radius.circular(1),
         ),
       ),
     );
@@ -300,7 +395,8 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
             ],
           ),
           child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             leading: CircleAvatar(
               backgroundColor: Colors.white.withOpacity(0.2),
               child: Icon(
@@ -324,7 +420,8 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    Icon(Icons.phone, size: 16, color: Colors.white.withOpacity(0.7)),
+                    Icon(Icons.phone,
+                        size: 16, color: Colors.white.withOpacity(0.7)),
                     const SizedBox(width: 4),
                     Text(
                       subordinate['contactNumber'] ?? 'N/A',
@@ -335,7 +432,8 @@ class _SubordinateScreenState extends State<SubordinateScreen> {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    Icon(Icons.location_on, size: 16, color: Colors.white.withOpacity(0.7)),
+                    Icon(Icons.location_on,
+                        size: 16, color: Colors.white.withOpacity(0.7)),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(

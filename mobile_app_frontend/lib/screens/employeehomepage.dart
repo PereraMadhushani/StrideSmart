@@ -288,7 +288,7 @@ class _EmployeehomepageState extends State<Employeehomepage>
   void _handleNavigation(String title, BuildContext context) {
     final Map<String, Widget> routes = {
       'Subordinate': const SubordinateScreen(),
-      'Order': const OrderPage(),
+      'Order': const OrderStatusPage(),
       'Leave': const ApplyLeavePage(),
       'Status': const statusPage(),
       'Salary': const SalaryPage(regNumber: ''),

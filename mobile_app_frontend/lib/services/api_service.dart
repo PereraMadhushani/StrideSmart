@@ -233,4 +233,92 @@ class ApiService {
       return {'success': false, 'message': 'Error: $e'};
     }
   }
+
+  // Get orders functionality
+  static Future<Map<String, dynamic>> getAllOrders() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/orders'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        return {
+          'success': true,
+          'orders': data,
+        };
+      } else {
+        return {
+          'success': false,
+          'message': 'Failed to fetch orders',
+          'orders': [],
+        };
+      }
+    } catch (e) {
+      print('Error fetching orders: $e');
+      return {
+        'success': false,
+        'message': 'Error connecting to server',
+        'orders': [],
+      };
+    }
+  }
+
+  // Leave application functionality
+  static Future<Map<String, dynamic>> applyLeave(
+    String regNumber,
+    String duration,
+    String leaveType,
+    String fromDate,
+    String toDate,
+    String reason,
+  ) async {
+    try {
+      print('Submitting leave request with data:'); // Debug log
+      print('regNumber: $regNumber');
+      print('duration: $duration');
+      print('leaveType: $leaveType');
+      print('fromDate: $fromDate');
+      print('toDate: $toDate');
+      print('reason: $reason');
+
+      final response = await http.post(
+        Uri.parse('$baseUrl/apply-leave'), // Changed to match your server route
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'regNumber': regNumber,
+          'duration': duration,
+          'leaveType': leaveType,
+          'from_date': fromDate,
+          'to_date': toDate,
+          'reason': reason,
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final decodedResponse = jsonDecode(response.body);
+        return {
+          'success': true,
+          'message': decodedResponse['message'] ?? 'Leave applied successfully'
+        };
+      } else {
+        final errorData = jsonDecode(response.body);
+        return {
+          'success': false,
+          'message':
+              errorData['message'] ?? 'Failed to submit leave application'
+        };
+      }
+    } catch (e) {
+      print('Error in applyLeave: $e');
+      return {
+        'success': false,
+        'message': 'Failed to submit leave application'
+      };
+    }
+  }
 }
