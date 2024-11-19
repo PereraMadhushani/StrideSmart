@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ApiService {
   static const String baseUrl = 'http://10.0.2.2:3000/api';
@@ -321,36 +323,144 @@ class ApiService {
       };
     }
   }
-       // Status Update
-  static Future<Map<String, dynamic>> submitOrderStatus({
-  required String orderId,
-  required String regNumber,
-  required String status,
-}) async {
-  try {
-    final response = await http.post(
-      Uri.parse('$baseUrl/submit-order'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'order_id': orderId,
-        'reg_number': regNumber,
-        'current_status': status,
-      }),
-    );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      return {
-        'success': false,
-        'message': jsonDecode(response.body)['message'] ?? 'Failed to update order status'
-      };
+  // Status Update
+  static Future<Map<String, dynamic>> submitOrderStatus({
+    required String orderId,
+    required String regNumber,
+    required String status,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/submit-order'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'order_id': orderId,
+          'reg_number': regNumber,
+          'current_status': status,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        return {
+          'success': false,
+          'message': jsonDecode(response.body)['message'] ??
+              'Failed to update order status'
+        };
+      }
+    } catch (e) {
+      return {'success': false, 'message': 'Error connecting to server'};
     }
-  } catch (e) {
-    return {
-      'success': false,
-      'message': 'Error connecting to server'
-    };
   }
-}
+
+  Future<Map<String, dynamic>> fetchSalaries() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$baseUrl/salary/salaries'), // Updated to match client request
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print('Fetching salaries from: ${baseUrl}/salary/salaries');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to load salaries: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error in fetchSalaries: $e');
+      throw Exception('Error connecting to server: $e');
+    }
+  }
+
+  Future<List<int>> downloadSalarySlip({
+    required int slipId,
+    required String regNumber,
+    required String password,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/salary/generate-slip'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'regNumber': regNumber,
+          'password': password,
+          'slipId': slipId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      } else if (response.statusCode == 401) {
+        throw Exception('Invalid password');
+      } else {
+        throw Exception('Failed to download salary slip');
+      }
+    } catch (e) {
+      throw Exception('Error downloading salary slip: $e');
+    }
+  }
+
+  // Get employee details
+  Future<Map<String, dynamic>> getEmployeeDetails(String regNumber) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/employee/$regNumber'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        final error = json.decode(response.body);
+        throw Exception(error['message'] ?? 'Failed to get employee details');
+      }
+    } catch (e) {
+      throw Exception('Error connecting to server: $e');
+    }
+  }
+
+  // Update employee details
+  Future<Map<String, dynamic>> updateEmployeeDetails({
+    required String regNumber,
+    required String name,
+    required String email,
+    String? contactNumber,
+    String? address,
+  }) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/employee/$regNumber'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'name': name,
+          'email': email,
+          'contact_number': contactNumber,
+          'address': address,
+        }),
+      );
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        return responseData;
+      } else {
+        throw Exception(
+            responseData['message'] ?? 'Failed to update employee details');
+      }
+    } catch (e) {
+      throw Exception('Error updating employee details: $e');
+    }
+  }
 }

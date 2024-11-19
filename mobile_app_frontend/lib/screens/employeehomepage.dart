@@ -291,7 +291,7 @@ class _EmployeehomepageState extends State<Employeehomepage>
       'Order': const OrderStatusPage(),
       'Leave': const ApplyLeavePage(),
       'Status': const OrderPage(),
-      'Salary': const SalaryPage(regNumber: ''),
+      'Salary': SalaryPage(),
     };
 
     final Widget? nextPage = routes[title];

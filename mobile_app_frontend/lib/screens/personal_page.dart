@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../services/api_service.dart';
+import '../screens/settings_page.dart';
 
 class PersonalSettingsPage extends StatefulWidget {
   final ValueChanged<String> onNameChanged;
@@ -24,22 +24,24 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
   final _contactNumberController = TextEditingController();
   final _emailController = TextEditingController();
   final _userIdController = TextEditingController();
+  final _apiService = ApiService();
   bool _isLoading = false;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
-  // Professional color scheme matching home_page.dart
-  static const Color primaryColor = Color(0xFF2C3E50); // Dark blue-gray
-  static const Color accentColor = Color(0xFF3498DB); // Bright blue
-  static const Color backgroundColor = Color(0xFF34495E); // Darker blue-gray
-  static const Color cardColor = Color(0xFF2980B9); // Medium blue
-  static const Color highlightColor = Color(0xFF1ABC9C); // Turquoise
+  // Color scheme
+  static const Color primaryColor = Color(0xFF1E2B3C);
+  static const Color backgroundColor = Color(0xFF2C3E50);
+  static const Color accentColor = Color(0xFF3498DB);
+  static const Color cardColor = Color(0xFF2980B9);
+  static const Color highlightColor = Color(0xFF1ABC9C);
 
   @override
   void initState() {
     super.initState();
     _userIdController.text = widget.userId;
     _setupAnimation();
+    _loadEmployeeDetails();
   }
 
   void _setupAnimation() {
@@ -51,6 +53,70 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
     _animationController.forward();
+  }
+
+  Future<void> _loadEmployeeDetails() async {
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await _apiService.getEmployeeDetails(widget.userId);
+      if (response != null && response['data'] != null) {
+        final employeeData = response['data'];
+        setState(() {
+          _firstNameController.text = employeeData['name'] ?? '';
+          _emailController.text = employeeData['email'] ?? '';
+          _addressController.text = employeeData['address'] ?? '';
+          _contactNumberController.text = employeeData['contact_number'] ?? '';
+        });
+      }
+    } catch (e) {
+      print('Error loading employee details: $e');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  String? _validateUserId(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'User ID is required';
+    }
+    final userIdRegex = RegExp(r'^[A-Z]-\d{3}$');
+    if (!userIdRegex.hasMatch(value)) {
+      return 'Invalid format. Use format: E-001';
+    }
+    return null;
+  }
+
+  String? _validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Name is required';
+    }
+    if (value.length < 2) {
+      return 'Name must be at least 2 characters';
+    }
+    return null;
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    return null;
+  }
+
+  String? _validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    final phoneRegex = RegExp(r'^(?:\+94|0)?[7][0-9]{8}$');
+    if (!phoneRegex.hasMatch(value)) {
+      return 'Please enter a valid Sri Lankan phone number';
+    }
+    return null;
   }
 
   InputDecoration _buildInputDecoration(String label, IconData icon) {
@@ -76,6 +142,7 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: Colors.red),
       ),
+      errorStyle: const TextStyle(color: Colors.redAccent),
     );
   }
 
@@ -84,62 +151,53 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
             primaryColor,
             backgroundColor,
-            cardColor,
           ],
-          stops: const [0.2, 0.6, 1.0],
         ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: _buildAppBar(),
-        body: _buildBody(),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-      title: const Text(
-        'Personal Information',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.5,
-          fontFamily: 'Poppins',
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new,
+                color: Colors.white, size: 20),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: const Text(
+            'Personal Information',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
-      ),
-      centerTitle: true,
-    );
-  }
-
-  Widget _buildBody() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            _buildBasicInfoCard(),
-            const SizedBox(height: 16),
-            _buildContactInfoCard(),
-            const SizedBox(height: 16),
-            _buildAddressCard(),
-            const SizedBox(height: 24),
-            _buildUpdateButton(),
-          ],
-        ),
+        body: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      _buildBasicInfoCard(),
+                      const SizedBox(height: 16),
+                      _buildContactInfoCard(),
+                      const SizedBox(height: 16),
+                      _buildAddressCard(),
+                      const SizedBox(height: 24),
+                      _buildUpdateButton(),
+                    ],
+                  ),
+                ),
+              ),
       ),
     );
   }
@@ -159,15 +217,15 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
               controller: _userIdController,
               decoration: _buildInputDecoration('User ID', Icons.badge),
               style: const TextStyle(color: Colors.white),
-              readOnly: true,
+              validator: _validateUserId,
+              keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _firstNameController,
               decoration: _buildInputDecoration('Name', Icons.person),
               style: const TextStyle(color: Colors.white),
-              validator: (value) =>
-                  value?.isEmpty == true ? 'Name is required' : null,
+              validator: _validateName,
             ),
           ],
         ),
@@ -191,6 +249,7 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
               decoration: _buildInputDecoration('Contact Number', Icons.phone),
               style: const TextStyle(color: Colors.white),
               keyboardType: TextInputType.phone,
+              validator: _validatePhone,
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -198,8 +257,7 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
               decoration: _buildInputDecoration('Email Address', Icons.email),
               style: const TextStyle(color: Colors.white),
               keyboardType: TextInputType.emailAddress,
-              validator: (value) =>
-                  value?.isEmpty == true ? 'Email is required' : null,
+              validator: _validateEmail,
             ),
           ],
         ),
@@ -231,10 +289,9 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: _isLoading ? null : updateEmployee,
+        onPressed: _isLoading ? null : _updateEmployee,
         style: ElevatedButton.styleFrom(
           backgroundColor: highlightColor,
-          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
@@ -261,133 +318,46 @@ class _PersonalSettingsPageState extends State<PersonalSettingsPage>
     );
   }
 
-  Future<void> updateEmployee() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
+  Future<void> _updateEmployee() async {
+    if (!_formKey.currentState!.validate()) return;
 
-      try {
-        final response = await http.put(
-          Uri.parse('http://10.0.2.2:3000/update-employee'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'userId': _userIdController.text,
-            'firstName': _firstNameController.text,
-            'address': _addressController.text,
-            'email': _emailController.text,
-          }),
+    setState(() => _isLoading = true);
+
+    try {
+      await _apiService.updateEmployeeDetails(
+        regNumber: _userIdController.text,
+        name: _firstNameController.text,
+        email: _emailController.text,
+        contactNumber: _contactNumberController.text,
+        address: _addressController.text,
+      );
+
+      widget.onNameChanged(_firstNameController.text);
+
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SettingsPage(
+              name: _firstNameController.text,
+            ),
+          ),
         );
-
-        if (response.statusCode == 200) {
-          widget.onNameChanged(_firstNameController.text);
-          _showSuccessDialog();
-        } else {
-          _showErrorDialog('Failed to update profile');
-        }
-      } catch (e) {
-        _showErrorDialog('An error occurred. Please try again.');
-      } finally {
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update profile: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
         setState(() => _isLoading = false);
       }
     }
-  }
-
-  void _showSuccessDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          backgroundColor: backgroundColor,
-          title: const Text(
-            'Success!',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          content: const Text(
-            'Your profile has been updated successfully.',
-            style: TextStyle(color: Colors.white70, fontSize: 16),
-          ),
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: highlightColor,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'OK',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          backgroundColor: backgroundColor,
-          title: const Text(
-            'Error',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          content: Text(
-            message,
-            style: const TextStyle(color: Colors.white70, fontSize: 16),
-          ),
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: highlightColor,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                'OK',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
