@@ -1,0 +1,55 @@
+.History-h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #3B1E54;
+}
+
+.btn {
+  margin: 5px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* Table Styling */
+.MuiTable-root {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.MuiTableCell-root {
+  padding: 16px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.MuiTableHead-root {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Scrollable Table Container */
+.material-table-container {
+  height: 400px;  /* Set the height for the scrollable area */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  border: 1px solid #ddd; /* Optional: Adds border around the table container */
+  margin-top: 20px;  /* Optional: Adds space between title and table */
+}
+
+/* Responsive Table for Smaller Screens */
+@media screen and (max-width: 768px) {
+  .MuiTableCell-root {
+    padding: 10px;
+  }
+}

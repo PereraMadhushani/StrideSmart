@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.scroll-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+.admin-dashboard {
+  padding: 20px; /* Adjust padding as needed */
+  font-family: Arial, sans-serif;
+  min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+.top-controls {
+  margin: 20px 0;
+}
+
+.add-user {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.add-user:hover {
+  background-color: #1565c0;
+}
+
+.scrollable-table-container {
+  max-height: 400px; /* Adjust height as needed */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+.employee_image {
+  max-width: 50px;
+  max-height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+thead th {
+  position: sticky;
+  top: 0; /* Makes the header stay at the top */
+  background-color: #f1f1f1; /* Background color to distinguish header */
+  z-index: 1; /* Ensures the header stays above the table body */
+  text-align: left;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 10px;
+  }
+
+  .add-user {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .scrollable-table-container {
+    max-height: 300px; /* Adjust height for smaller screens */
+  }
+
+  table td {
+    padding: 6px 8px;
+  }
+
+  thead th {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-user {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .scrollable-table-container {
+    max-height: 200px; /* Adjust height for smaller screens */
+  }
+
+  table td {
+    padding: 4px 6px;
+  }
+
+  thead th {
+    font-size: 12px;
+  }
+}

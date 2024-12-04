@@ -1,0 +1,104 @@
+/* ForgotPassword.css */
+
+.forgot-password-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #eeeeee; /* Background color from the theme */
+  margin: 0;
+  background-image: url('../../../assets/images/B.jpg');
+  background-size: cover; /* Ensure the image covers the entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Avoid repeating the background image */
+}
+
+/* ForgotPassword.css */
+
+.forgot-password-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  /*background-image: url('../../../assets/images/pwd.jpg');*/
+  background-size: cover; /* Ensures the image covers the container */
+  background-position: center;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  color: #ffffff; /* Optional: Adjust text color for readability */
+  box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+}
+
+
+.forgot-password-container h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: black; /* Text color from the theme */
+}
+
+.forgot-password-container p {
+  color: black; /* Text color from the theme */
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-password-form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.forgot-password-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.forgot-password-form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #9b7ebd; /* Border color from the theme */
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  background-color: #eeeeee; /* Background color from the theme */
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.forgot-password-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b1e54; /* Background color from the theme */
+  color: #eeeeee; /* Text color from the theme */
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+  -webkit-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+  -moz-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+  box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+}
+
+.forgot-password-btn:hover {
+  background-color: #9b7ebd; /* Hover background color from the theme */
+}
+
+.forgot-password-alert {
+  color: #4caf50;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .forgot-password-container {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Oswald', Arial, sans-serif; /* Use Oswald font */
+  height: 100%;
+}
+
+.home-app {
+  position: relative; /* Ensure positioning context */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* Center contents */
+  align-items: center; /* Center contents vertically */
+}
+
+/* Background Image with Blur */
+.home-app::before {
+  content: '';
+  background: url('../../assets/images/newH.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; /* Background stays behind content */
+  filter: opacity(0.5px); /* Apply blur effect */
+  pointer-events: none; /* Ensure background does not interfere with other elements */
+}
+
+/* Clear Square Container */
+.home-clear-square {
+  position: absolute;
+  width: 65%; /* Adjust as needed */
+  max-width: 800px; /* Set a maximum width */
+  height: 80%; /* Height can be adjusted */
+  background: rgba(183, 148, 131, 0.5); /* Semi-transparent background */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  border-radius: 50px; /* Rounded corners */
+  overflow: hidden; /* Hide any overflow */
+  z-index: 1; /* Ensure it stays above the blurred background */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; /* Center contents vertically */
+  align-items: center; /* Center contents horizontally */
+  
+}
+
+/* Main Section */
+.home-main {
+  text-align: center;
+  padding: 20px;
+  color: #257180; /* Text color */
+}
+
+.home-wc-content {
+  text-decoration: wavy;
+  color: antiquewhite;
+  margin-top: 25px; 
+}
+
+/* Welcome Section */
+.home-welcome-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-text-section {
+  text-align: center;
+  margin: 0;
+  position: relative;
+}
+
+.home-wc {
+  font-size: 70px; /* Adjust font size */
+  margin-bottom: 2px; /* Spacing below heading */
+  margin-top: 0px;
+  margin-left: 10px;
+  background: linear-gradient(90deg, white, #f7a5a5); /* Gradient color */
+  -webkit-background-clip: text; /* For WebKit browsers */
+  -webkit-text-fill-color: transparent; /* Makes the text fill transparent to show gradient */
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+  letter-spacing: 2px; /* Increased letter spacing */
+  animation: home-fadeIn 2s ease-in; /* Animation effect */
+}
+
+/* Keyframes for animation */
+@keyframes home-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* Slight upward motion */
+  }
+  to {
+    opacity: 2;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons Section */
+/* General Button Styling */
+.home-btn3 {
+  background-color: #257180; /* Button background color */
+  color: rgb(227, 205, 205); /* Text color */
+  padding: 10px 30px; /* Padding for buttons */
+  font-size: 25px; /* Font size */
+  border-radius: 10px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  border: none; /* No borders */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Shadow for button */
+  margin-top: 20px; /* Added margin for space between text and button */
+}
+
+/* LOGIN Button Specific Styles */
+.home-login-home {
+  background-color: #aa5c09; /* Specific color for the login button */
+}
+
+/* Hover Effect for Buttons */
+.home-btn3:hover {
+  background-color: #750E21; /* Darker color on hover */
+}
+
+/* Responsive Design for Tablets (Screen width: 768px and below) */
+@media (max-width: 768px) {
+  .home-clear-square {
+    width: 85%; /* Increase width on tablets */
+    height: 70%; /* Decrease height on tablets */
+  }
+
+  .home-wc {
+    font-size: 40px; /* Adjust font size for tablet */
+  }
+
+  .home-btn3 {
+    font-size: 14px; /* Adjust button size for tablets */
+  }
+}
+
+/* Responsive Design for Mobile Phones (Screen width: 480px and below) */
+@media (max-width: 480px) {
+  .home-app {
+    background-size: cover;
+  }
+
+  .home-main {
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+
+  .home-clear-square {
+    width: 90%; /* Increase width on mobile */
+    height: 60%; /* Decrease height on mobile */
+  }
+
+  .home-wc {
+    font-size: 24px; /* Further reduce font size for mobile */
+  }
+
+  .home-btn3 {
+    font-size: 12px; /* Adjust button size for mobile */
+    padding: 8px 20px; /* Adjust padding for mobile */
+    margin-top: 15px; /* Adjust margin for mobile if needed */
+  }
+}

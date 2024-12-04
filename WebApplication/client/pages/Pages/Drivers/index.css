@@ -1,0 +1,49 @@
+/* index.css */
+.drivers h1 {
+  text-align: center;
+  font-size: 3rem; /* Increased font size */
+  margin-bottom: 20px;
+  color: #3B1E54;
+}
+
+.drivers-searchbar {
+  margin-top: 50px; /* Adjusted margin-top for more space */
+}
+
+.driver-table-container {
+  margin: 20px auto;
+  width: 90%;
+}
+
+.driver-table-scroll {
+  max-height: 400px; /* Adjust the height as needed */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+.driver-table-scroll th,
+.driver-table-scroll td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.driver-table-scroll th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.driver-table-scroll tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.driver-table-scroll tr:hover {
+  background-color: #ddd;
+}
+
+.driver_image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}

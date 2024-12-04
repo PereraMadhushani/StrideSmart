@@ -1,0 +1,80 @@
+/* OrderForm.css */
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-image: url('../../../assets/images/B.jpg');
+  background-size: cover; /* Ensure the image covers the entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Avoid repeating the background image */
+  padding: 20px;
+}
+
+.order-form h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.order-form form {
+  background-color: #fffffffb; /* White background for the form */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  /*background-image: url('../../assets/images/OD.jpg');*/
+  background-size: cover; /* Ensure the image covers the entire form */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Avoid repeating the background image */
+  width: 100%;
+  max-width: 500px; /* Max width for the form */
+  height: 600px; /* Set a specific height for the form */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #3b1e54; /* Border color from the theme */
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  background-color: #eeeeee; /* Background color from the theme */
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.submit-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b1e54; /* Background color from the theme */
+  color: #eeeeee; /* Text color from the theme */
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #9b7ebd; /* Hover background color from the theme */
+}

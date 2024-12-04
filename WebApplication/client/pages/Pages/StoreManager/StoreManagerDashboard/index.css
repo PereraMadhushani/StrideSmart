@@ -1,0 +1,58 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EEEEEE; /* Light background color */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .store-manager-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .navbar {
+    background-color: #3B1E54; /* Dark purple background color for the navbar */
+  }
+  
+  .navbar-title {
+    flex-grow: 1;
+    text-align: center;
+    color: #EEEEEE; /* Light text color */
+  }
+  
+  .content-container {
+    flex-grow: 1;
+    padding: 20px;
+    margin-top: 64px; /* Add margin to the top to create space for the navbar */
+  }
+  
+  .info-card {
+    background-color: #D4BEE4; /* Light purple background color for the cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px; /* Reduced padding to decrease height */
+    transition: transform 0.3s ease;
+    height: auto; /* Ensure height adjusts based on content */
+    min-height: 150px; /* Set a minimum height if needed */
+  }
+  
+  .info-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .info-card .MuiTypography-h6 {
+    margin-bottom: 5px; /* Reduced margin to decrease height */
+    color: #3B1E54; /* Dark purple text color */
+  }
+  
+  .info-card .MuiButton-containedPrimary {
+    background-color: #9B7EBD; /* Medium purple color for the Accept button */
+    color: #EEEEEE; /* Light text color */
+  }
+  
+  .info-card .MuiButton-containedSecondary {
+    background-color: #3B1E54; /* Dark purple color for the Reject button */
+    color: #EEEEEE; /* Light text color */
+  }

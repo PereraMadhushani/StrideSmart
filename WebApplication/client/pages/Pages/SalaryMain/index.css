@@ -1,0 +1,57 @@
+.salary-h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-top: -20px;
+  margin-bottom: 20px; 
+  color: #3B1E54;
+}
+
+.salary-search {
+  margin-top: 20px; 
+}
+
+.salary-Slip-container {
+  margin: 10px auto;
+  width: 90%;
+}
+
+.salary-table-scroll {
+  max-height: 400px; 
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+
+.salary-table-scroll th,
+.salary-table-scroll td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.salary-table-scroll th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.salary-table-scroll tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.salary-table-scroll tr:hover {
+  background-color: #ddd;
+}
+
+.salary-page {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; 
+  overflow: hidden; 
+  width: 100%;
+  padding: 10px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

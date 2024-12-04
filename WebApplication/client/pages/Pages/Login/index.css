@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Oswald', Arial, sans-serif; /* Use Oswald font */
+  height: 100%;
+}
+
+/* Background for the body or outer container */
+.body-background {
+  /* Replace with the actual path to your image */
+  background-size: cover;      /* Cover entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Avoid repeating the background image */
+  min-height: 100vh;           /* Full viewport height */
+  display: flex;
+  justify-content: center;     /* Center horizontally */
+  align-items: center;         /* Center vertically */
+ 
+}
+
+
+
+.login-container {
+  display: flex;                     /* Use flexbox for layout */
+  justify-content: center;           /* Center child elements horizontally */
+  align-items: center;               /* Center child elements vertically */
+  width: 100%;                       /* Full width */
+  height: 100vh;                     /* Full viewport height */
+  background-color: aliceblue;
+  background-size: cover;            /* Cover entire container */
+  background-position: center;       /* Center the image */
+  background-repeat: no-repeat;      /* Avoid repeating the background image */
+  background-image: url('../../assets/images/B.jpg'); /* Path to your image */
+}
+
+/* Styling for the login form */
+.w-50 {
+  width: 100% !important;  /* Full width for form */
+}
+
+.p-5 {
+  padding: 3rem !important;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.rounded {
+  border-radius: 50px; /* Add rounded corners */
+}
+
+.h3 {
+  margin-top: -0px; /* Adjust margin as needed */
+  color: #3B1E54; /* Text color from the theme */
+  text-align: center; /* Center text */
+}
+
+.custom-heading {
+  text-align: center; /* Center text */
+}
+
+/* Styling for the form fields */
+.form-control {
+  border: 1px solid #9B7EBD; /* Border color from the theme */
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #EEEEEE; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+/* Button styling */
+.btn-success {
+  background-color: #3B1E54; /* Background color from the theme */
+  border-color: #3B1E54; /* Border color from the theme */
+  padding: 10px;
+  font-size: 16px;
+  color: #EEEEEE; /* Text color from the theme */
+}
+
+.btn-success:hover {
+  background-color: #9B7EBD; /* Hover background color from the theme */
+  border-color: #9B7EBD; /* Hover border color from the theme */
+}
+
+/* Checkbox and label styling */
+.mb-1 input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.mb-1 label {
+  font-size: 14px;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.mb-4 {
+  text-align: center; /* Align the logo and title to the right */
+}
+
+/* Forgot Password and Link Styling */
+.forgot-password-link {
+  display: block;
+  margin-top: 10px;
+  color: black (179, 208, 245); /* Text color from the theme */
+  text-decoration: none;
+  font-size: 14px;
+  text-align: right;
+}
+
+.forgot-password-link:hover {
+  color: #3B1E54; /* Hover text color from the theme */
+  text-decoration: underline;
+}
+
+/* Responsive Design for Tablets (Screen width: 768px and below) */
+@media (max-width: 768px) {
+  .login-container {
+    width: 90% !important; /* Full width on smaller screens */
+  }
+
+  .h3, .custom-heading {
+    margin-left: 20px;  /* Adjust margins for smaller screens */
+  }
+
+  .clear-square {
+    width: 85%; /* Increase width on tablets */
+  }
+}
+
+/* Responsive Design for Mobile Phones (Screen width: 480px and below) */
+@media (max-width: 480px) {
+  .login-container {
+    width: 90% !important; /* Increase width on mobile */
+  }
+}

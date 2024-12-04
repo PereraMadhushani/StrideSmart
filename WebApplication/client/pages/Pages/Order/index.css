@@ -1,0 +1,70 @@
+.order-page {
+  padding: 20px;
+}
+
+.order-page h1 {
+  text-align: center;
+  font-size:3rem;
+  margin-bottom: 20px;
+  color: #3B1E54;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  table-layout: auto; /* Allows table to adjust to content */
+}
+
+.order-table th, .order-table td {
+  border: 1px solid #9B7EBD;
+  padding: 12px 15px; /* Adds more padding for better spacing */
+  text-align: center;
+}
+
+.order-table th {
+  background-color: #D4BEE4;
+  color: #3B1E54;
+  font-weight: bold;
+}
+
+.order-table th:nth-child(1), .order-table td:nth-child(1) {
+  width: 200px; /* Reg Number */
+}
+
+.order-table th:nth-child(2), .order-table th:nth-child(3),
+.order-table td:nth-child(2), .order-table td:nth-child(3) {
+  width: 200px; /* Date and DueDate */
+}
+
+.order-table th:nth-child(4), .order-table td:nth-child(4) {
+  width: 200px; /* Qty */
+}
+
+.order-table th:nth-child(5), .order-table td:nth-child(5) {
+  width: 200px; /* Unit Price */
+}
+
+.order-table th:nth-child(6), .order-table td:nth-child(6) {
+  width: 200px; /* Status */
+}
+
+.add-order-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3B1E54;
+  color: #EEEEEE;
+  text-align: center;
+  text-decoration: none;
+  font-size: 24px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.add-order-button:hover {
+  background-color: #9B7EBD;
+}

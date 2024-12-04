@@ -1,0 +1,79 @@
+.leave-application-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #EEEEEE; /* Background color from the theme */
+}
+
+.leave-card {
+  background-color: #D4BEE4; /* Background color from the theme */
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.leave-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.leave-field {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Arial', sans-serif;
+}
+
+.leave-field label {
+  font-weight: bold;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.leave-field span {
+  color: #555;
+}
+
+.action-msg {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.approve-btn {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+}
+.reject-btn{
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+}
+
+.approve-btn {
+  background-color: #3B1E54; /* Background color from the theme */
+  color: #EEEEEE; /* Text color from the theme */
+}
+
+.reject-btn {
+  background-color: #9B7EBD; /* Background color from the theme */
+  color: #EEEEEE; /* Text color from the theme */
+}

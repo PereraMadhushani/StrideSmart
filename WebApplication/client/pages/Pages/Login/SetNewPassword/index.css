@@ -1,0 +1,125 @@
+/* SetNewPassword.css */
+
+/* SetNewPassword.css */
+
+.set-new-password-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #eeeeee; /* Background color from the theme */
+  margin: 0;
+  background-image: url('../../../assets/images/B.jpg');
+  background-size: cover; /* Ensure the image covers the entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Avoid repeating the background image */
+}
+
+.set-new-password-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  /*background-image: url('../../../assets/images/npwd.jpg'); /* Set the background image */
+  background-size: cover; /* Ensure the image covers the container */
+  background-position: center; /* Center the image */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  -webkit-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+  -moz-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+  box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+}
+
+.set-new-password-container h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.set-new-password-container p {
+  color: #9b7ebd; /* Text color from the theme */
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.set-new-password-form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  border-radius: 10px;
+ 
+}
+
+.set-new-password-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #3b1e54; /* Text color from the theme */
+}
+
+.set-new-password-form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #9b7ebd; /* Border color from the theme */
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  background-color: #eeeeee; /* Background color from the theme */
+  color: #3b1e54; /* Text color from the theme */
+  border-radius: 15px;
+  box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+}
+
+.set-new-password-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b1e54; /* Background color from the theme */
+  color: #eeeeee; /* Text color from the theme */
+  text-align: center;
+  border-radius: 15px;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+  -webkit-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+-moz-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+}
+
+.set-new-password-btn:hover {
+  background-color: #9b7ebd; /* Hover background color from the theme */
+}
+
+.set-new-password-alert {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.set-new-password-alert.success {
+  color: #4caf50;
+}
+
+.set-new-password-alert.error {
+  color: #a04747; /* Updated error color */
+}
+
+.set-new-password-success {
+  color: #4caf50;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  border: 1px solid #4caf50;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: #e8f5e9;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .set-new-password-container {
+    padding: 1rem;
+  }
+}

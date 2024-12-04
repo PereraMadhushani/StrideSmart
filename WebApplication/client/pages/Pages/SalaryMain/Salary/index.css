@@ -1,0 +1,45 @@
+.title {
+  text-align: center;
+  color: #3B1E54; /* Text color from the theme */
+  font-weight: bold;
+}
+
+.previous-btn {
+  background-color: #D4BEE4; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.next-btn {
+  background-color: #9B7EBD; /* Background color from the theme */
+  color: #EEEEEE; /* Text color from the theme */
+}
+
+.previous-btn:hover {
+  background-color: #9B7EBD; /* Hover background color from the theme */
+}
+
+.next-btn:hover {
+  background-color: #3B1E54; /* Hover background color from the theme */
+}
+
+.MuiPagination-root {
+  color: #9B7EBD; /* Text color from the theme */
+}
+
+.MuiIconButton-root {
+  color: #9B7EBD; /* Text color from the theme */
+}
+
+.MuiTableCell-head {
+  background-color: #D4BEE4; /* Background color from the theme */
+  font-weight: bold;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.MuiTableCell-body {
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.MuiPaper-root {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}

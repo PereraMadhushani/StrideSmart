@@ -1,0 +1,125 @@
+.salary-slip-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #EEEEEE; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ef18f7; /* Background color from the theme */
+  padding: 10px;
+  color: #EEEEEE; /* Text color from the theme */
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.home-btn, .logout-btn {
+  background-color: #3B1E54; /* Background color from the theme */
+  border: none;
+  color: #EEEEEE; /* Text color from the theme */
+  padding: 8px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.language-select {
+  padding: 8px;
+  margin-right: 15px;
+  background-color: #D4BEE4; /* Background color from the theme */
+  border: 1px solid #9B7EBD; /* Border color from the theme */
+  border-radius: 5px;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.employee-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.employee-info label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.employee-info input, .employee-info select {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #9B7EBD; /* Border color from the theme */
+  border-radius: 5px;
+  background-color: #D4BEE4; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.salary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.salary-table th, .salary-table td {
+  border: 1px solid #9B7EBD; /* Border color from the theme */
+  padding: 10px;
+  text-align: center;
+}
+
+.salary-table th {
+  background-color: #D4BEE4; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.salary-table td input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #9B7EBD; /* Border color from the theme */
+  border-radius: 5px;
+  background-color: #EEEEEE; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.net-salary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.net-salary input {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #9B7EBD; /* Border color from the theme */
+  border-radius: 5px;
+  background-color: #D4BEE4; /* Background color from the theme */
+  color: #3B1E54; /* Text color from the theme */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.download-btn, .send-btn {
+  background-color: #3B1E54; /* Background color from the theme */
+  color: #EEEEEE; /* Text color from the theme */
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.download-btn:hover, .send-btn:hover {
+  background-color: #9B7EBD; /* Hover background color from the theme */
+}
