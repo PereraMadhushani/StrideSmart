@@ -1,0 +1,55 @@
+/* General styles for the search bar */
+.search-bar2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+-webkit-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+-moz-box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+box-shadow: -7px 5px 23px -4px rgba(0,0,0,0.67);
+width: 70%;
+height: 60px;
+align-items: center;justify-content: center;
+margin-left: 15%;
+border-radius: 20px;
+margin-top: -30px;
+
+}
+
+.search-input2 {
+  width: 50%;
+  padding: 10px 15px;
+  border: 2px solid #9B7EBD; /* Medium purple border color */
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  font-size: 16px;
+  color: #3B1E54; /* Dark purple text color */
+  background-color: #EEEEEE; /* Light background color */
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #3B1E54; /* Dark purple border color on focus */
+}
+
+.search-button2 {
+  padding: 10px 15px;
+  border: 2px solid #010002; /* Medium purple border color */
+  border-left: none;
+  border-radius: 0 25px 25px 0;
+  background-color: #0f061a; /* Medium purple background color */
+  color: #EEEEEE; /* Light text color */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  height: 44px;
+}
+
+.search-icon1{
+  margin-top: -4px;
+}
+
+.search-button:hover {
+  background-color: #1b2661; /* Dark purple background color on hover */
+}

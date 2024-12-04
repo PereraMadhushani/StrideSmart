@@ -1,0 +1,216 @@
+/* General styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding-top: 65px; /* Adjusts for navbar height */
+}
+
+/* Navbar Styles */
+header.navbar-unique {
+  background: linear-gradient(to right, #A98AC6, #5F458C); /* Primary (Darker) background color */
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically center the items */
+}
+
+/* Logo container */
+.logo-container-unique {
+  display: flex;
+  align-items: center; /* Vertically center the logo */
+}
+
+.logo-unique {
+  width: 60px;
+  height: auto;
+}
+
+.menu-items-unique {
+  list-style: none;
+  display: flex;
+  align-items: center; /* Vertically center the menu items */
+  gap: 20px;
+}
+
+.menu-items-unique li {
+  position: relative;
+  margin-top: 25px; /* Increase the top margin to move the items down */
+  margin-bottom: 15px; /* Add bottom margin for additional spacing */
+}
+
+
+.icon-unique {
+  font-size: 36px; /* Adjusted size */
+  color: #FFFFFF; /* White icon color */
+  cursor: pointer;
+  
+}
+
+.icon-unique:hover {
+  color: #5F458C; /* Hover color in a slightly brighter purple */
+}
+
+
+.notification-count {
+  position: absolute;
+  top: 5px;
+  right: -10px;
+  background-color: #FF6347; /* Vibrant tomato red background color */
+  color: #FFFFFF; /* White text color */
+  border-radius: 50%;
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
+.profile-link-unique {
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #A98AC6; /* Border color in a complementary lilac shade */
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Vertically center the icon */
+  justify-content: center; /* Horizontally center the icon */
+}
+
+.profile-icon-unique {
+  font-size: 24px;
+  color: #FFFFFF; /* White icon color */
+}
+
+.dropdown-content-unique {
+  display: none;
+  position: absolute;
+  background-color: #D4BEE4; /* Background color in a complementary lilac shade */
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+  top: 50px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dropdown-content-unique a {
+  color: #3B1E54; /* Text color from the theme */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content-unique a:hover {
+  background-color: #5F458C; /* Hover background color in a slightly brighter purple */
+}
+
+.dropdown-unique:hover .dropdown-content-unique {
+  display: block;
+}.dropdown-content-unique {
+  display: none;
+  position: absolute;
+  background-color: #D4BEE4; /* Background color in a complementary lilac shade */
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+  top: 100%; /* Position the dropdown below the parent element */
+  border-radius: 5px;
+  overflow: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition for visibility */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dropdown-content-unique a {
+  color: #3B1E54; /* Text color from the theme */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content-unique a:hover {
+  background-color: #5F458C; /* Hover background color in a slightly brighter purple */
+}
+
+.dropdown-unique:hover .dropdown-content-unique,
+.dropdown-unique:focus-within .dropdown-content-unique {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.notification-item span {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .menu-container-unique {
+    flex-direction: column;
+  }
+
+  .menu-items-unique {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  header.navbar-unique {
+    padding: 5px 10px;
+  }
+
+  .icon-unique {
+    font-size: 30px; /* Adjust size for smaller screens */
+    margin-left: 10px;
+  }
+
+  .profile-link-unique {
+    width: 30px;
+    height: 30px;
+  }
+}
